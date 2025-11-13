@@ -85,8 +85,8 @@ public class FunctorLawTests
         bool eq(K<IO, int> vx, K<IO, int> vy) => 
             vx.RunSafe().Equals(vy.RunSafe());
         
-        var ma = IO<int>.Pure(1);
-        var mx = IO<int>.Fail(Errors.Closed);
+        var ma = LE.IO.pure(1);
+        var mx = LE.IO.fail<int>(Errors.Closed);
         FunctorLaw<IO>.assert(ma, eq);
         FunctorLaw<IO>.assert(mx, eq);
     }
@@ -125,8 +125,8 @@ public class FunctorLawTests
     [Fact]
     public void EitherT()
     {
-        var fa = EitherT<string, Identity, int>.Right(1);
-        var fx = EitherT<string, Identity, int>.Left("failed");
+        var fa = LE.EitherT.Right<string, Identity, int>(1);
+        var fx = LE.EitherT.Left<string, Identity, int>("failed");
         FunctorLaw<EitherT<string, Identity>>.assert(fa);
         FunctorLaw<EitherT<string, Identity>>.assert(fx);
     }
@@ -222,7 +222,7 @@ public class FunctorLawTests
     [Fact]
     public void IdentityT()
     {
-        var fa = IdentityT<Identity, int>.Pure(1);
+        var fa = LE.IdentityT.Pure<Identity, int>(1);
         FunctorLaw<IdentityT<Identity>>.assert(fa);
     }
     
